@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/home")
-public class ToHomeServlet extends HttpServlet {
+public class HomeServlet extends HttpServlet {
 
     private MovieManager movieManager = new MovieManager();
     private GenreManager genreManager = new GenreManager();
@@ -19,6 +19,8 @@ public class ToHomeServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        req.setAttribute("movies",movieManager.getAllMovies());
+        req.setAttribute("genres",genreManager.getAllGenres());
         req.getRequestDispatcher("home.jsp").forward(req,resp);
     }
 }

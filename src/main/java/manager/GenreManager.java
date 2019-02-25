@@ -93,4 +93,22 @@ public class GenreManager {
 
     }
 
+    public Genre getGenreByName(String name){
+        String query = "SELECT * FROM genre WHERE name = '" + name + "'";
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()){
+                Genre genre = new Genre();
+                genre.setId(resultSet.getInt(1));
+                genre.setName(resultSet.getString(2));
+                return genre;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

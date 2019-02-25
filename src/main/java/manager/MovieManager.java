@@ -1,6 +1,7 @@
 package manager;
 
 import db.DBConnectionProvider;
+import model.Genre;
 import model.Movie;
 import util.DateUtil;
 
@@ -19,7 +20,7 @@ public class MovieManager {
     }
 
     public void addMovie(Movie movie){
-        String query = "INSERT INTO movies (title, descr, created_date, picUrl, year, director)" +
+        String query = "INSERT INTO movie (title, description, created_date, picUrl, year, director)" +
                 "VALUES (?,?,?,?,?,?)";
 
         try {
@@ -64,6 +65,23 @@ public class MovieManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void addRelationship(Movie movie, List<Genre> genres){
+        String query = "INSERT INTO movie_genre (movie_id, genre_id)" +
+                "VALUES (?,?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            for (Genre genre : genres) {
+                int genId = genre.getId();
+                preparedStatement.setInt(1,movie.getId());
+                preparedStatement.setInt(2,genId);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
