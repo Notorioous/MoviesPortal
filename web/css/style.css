@@ -701,13 +701,13 @@ header {}
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    left: -23%;
+    left: 65%;
     margin: auto;
-    min-width: 1110px;
+    min-width: 250px;
     opacity: 0;
     padding: 8px;
     position: absolute;
-    text-align: left;
+    text-align: center;
     top: 100%;
     -webkit-transform: scaleY(0);
     transform: scaleY(0);
@@ -1165,7 +1165,7 @@ header {}
 .single-top-movie .img {}
 
 .single-top-movie .img a {
-    display: block;
+    /*display: block;*/
 }
 
 .single-top-movie .img a img {}

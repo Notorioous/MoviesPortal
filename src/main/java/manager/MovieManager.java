@@ -84,4 +84,46 @@ public class MovieManager {
         }
     }
 
+    public Movie getMovieById(int id){
+        String query = "SELECT * FROM movie WHERE id = " + id;
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()){
+                Movie movie = new Movie();
+                movie.setId(resultSet.getInt(1));
+                movie.setTitle(resultSet.getString(2));
+                movie.setDescription(resultSet.getString(3));
+                movie.setCreatedDate(DateUtil.convertStringToDate(resultSet.getString(4)));
+                movie.setPicUrl(resultSet.getString(5));
+                movie.setYear(resultSet.getInt(6));
+                movie.setGenres(genreManager.getGenresByMovieId(movie.getId()));
+                movie.setDirector(resultSet.getString(7));
+                return movie;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Movie> getMoviesByGenreId(int id){
+        String query = "SELECT movie_id FROM movie_genre WHERE genre_id = " + id;
+
+        List<Movie> movies = new ArrayList<Movie>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+             Movie movie = getMovieById(resultSet.getInt(1));
+             movies.add(movie);
+            }
+            return movies;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
